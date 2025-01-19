@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile>
+  <diagram name="Big Picture UML">
+    <mxGraphModel dx="1465" dy="741" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Database Node -->
+        <mxCell id="2" value="Database" style="shape=database;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="250" width="120" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Backend Logic Node -->
+        <mxCell id="3" value="Backend Logic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9edf7;" vertex="1" parent="1">
+          <mxGeometry x="200" y="100" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- API Requestor Node -->
+        <mxCell id="4" value="API Requestor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f7f7c6;" vertex="1" parent="1">
+          <mxGeometry x="500" y="100" width="140" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Server Node -->
+        <mxCell id="5" value="Server" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d4e157;" vertex="1" parent="1">
+          <mxGeometry x="500" y="10" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="6" value="" style="edgeStyle=elbowEdgeStyle;rounded=1;orthogonal=0;html=1;strokeColor=#000;" edge="1" parent="1" source="3" target="2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="7" value="" style="edgeStyle=elbowEdgeStyle;rounded=1;orthogonal=0;html=1;strokeColor=#000;" edge="1" parent="1" source="4" target="3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="8" value="" style="edgeStyle=elbowEdgeStyle;rounded=1;orthogonal=0;html=1;strokeColor=#000;" edge="1" parent="1" source="5" target="4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
