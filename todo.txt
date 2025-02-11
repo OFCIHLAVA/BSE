@@ -1,0 +1,64 @@
+- proc nenacita periodic payments?
+- prichozi uhrada vs prichozi uhrada kartou PROBLEM  
+
+When using dataclasses in Python, you don't typically define an __init__ method because dataclasses automatically generate one for you. However, you can still have post-initialization logic in both a parent and child class. To do this with dataclasses, you can use the __post_init__ method, which is automatically called after the generated __init__ method.
+
+Here's how you can implement this with dataclasses:
+
+Define a __post_init__ Method in the Base Class: This is where you put the post-initialization logic for the base class.
+
+Call the Base Class's __post_init__ Method in the Child Class's __post_init__: You do this to ensure that the post-initialization logic of both the base and child classes is executed.
+
+Example with Dataclasses
+Base Class
+python
+Copy code
+from dataclasses import dataclass
+
+@dataclass
+class BaseClass:
+    # Define your fields here
+
+    def __post_init__(self):
+        # Post-initialization logic for the base class
+        print("BaseClass post-init")
+Child Class
+python
+Copy code
+@dataclass
+class ChildClass(BaseClass):
+    # Define additional fields for ChildClass here
+
+    def __post_init__(self):
+        # Call base class post-init first
+        super().__post_init__()
+        # Post-initialization logic for the child class
+        print("ChildClass post-init")
+Usage
+python
+Copy code
+child_instance = ChildClass()
+Output
+This will result in the following output:
+
+csharp
+Copy code
+BaseClass post-init
+ChildClass post-init
+Explanation
+super().__post_init__() in the ChildClass ensures that the __post_init__ method of BaseClass is called.
+Then the child class's own __post_init__ logic is executed.
+This approach maintains the automatic handling of initialization by dataclasses while allowing you to have post-initialization logic in both the parent and child classes.
+
+
+21.4.2024 - Revolut csv extraction
+
+- Revolut Statements extract from csvs - better format than PDF in this case.
+- Function for csv load mby alaready done? - Check the transaction methods. Mby load into JSON for easier manipupation ? csv to JSNO already existing module mby? - Check.
+- Check if Revolut transactions can use the Trasaction class structure.
+
+1. Make feature to read the csvs - extract Revolut
+ + How to find what currency the file is dealing with? - name of file ?
+
+2. Add Revolut transaction types to identifiers.
+ + 

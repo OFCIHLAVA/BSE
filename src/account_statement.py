@@ -1,6 +1,6 @@
 import csv
+import os
 from dataclasses import dataclass, field
-import json
 import re
 from typing import ClassVar
 
@@ -10,7 +10,7 @@ import fitz
 from src.helper_functions import get_date_from_string
 from src.transactions import Transaction
 from src.constants import TransactionConstants
-from src.transactions import IncomingPayment, ElectronicBankingTransfer
+from src.transactions import IncomingPayment, ElectronicBankingTransfer, CardAtmCashOut
 from src.transactions import OutgoingPayment, OutgoingPaymentPeriodic
 from src.transactions import CardPaymentDebit, CardAtmCashOut, CardPaymentIncoming, CardAtmDeposit
 from src.transactions import BankPayedService, DirectDebit
@@ -213,17 +213,23 @@ class StatementAccount:
     def get_statement_year_csv(self) -> None:
         """Get year of csv statement.
 
+        # TODO - this is no longer true - remove this comment bellow
         Note:
             Year is extracted from filename. Filename should always be in format "cs2003", "eur2211", ... , where
             strings at the start indicates the currency of the Statement, first 2 digits means year and last 2 digits
             mean month.
         """
-        year_pattern: str = r"\D*(\d\d)"
-        match = re.search(year_pattern, self.file_path)
-        if match:
-            year = "20" + match.group(1)
-            return year
-        return 0
+        # year_pattern: str = r"\D*(\d\d)"
+        # match = re.search(year_pattern, self.file_path)
+        # if match:
+        #    year = "20" + match.group(1)
+        #    return year
+        # return 0
+
+        # Split the file path into the base name and the extension
+        base_name, extension = os.path.splitext(self.file_path)
+        # Get the last two characters of the base name
+        return "20" + base_name[-2:]
 
     def get_transactions_pdf(self) -> None:
         """Go through all the PDF file content and extract all the transactions from it.
@@ -420,6 +426,12 @@ class StatementAccount:
                 ],
                 "negative": True,
             },
+            CardAtmCashOut: {
+                "type": [
+                    "atm",
+                ],
+                "negative": True,
+            },
         }
 
         for row in self.csv_content:
@@ -504,6 +516,18 @@ class StatementAccount:
                                 all_transaction_lines_text=description,
                                 service_type="",
                             )
+                        elif key == CardAtmCashOut:
+                            tx = CardAtmCashOut(
+                                statement_account=self.account_number,
+                                parent_statement=self.file_path,
+                                account_from=self.account_number,
+                                year=self.year,
+                                amount=amount,
+                                date_booked=date_completed,
+                                currency=currency,
+                                all_transaction_lines_text=description,
+                            )
+
                         self.all_transactions.append(tx)
                         if fee > 0:
                             tx_fee = BankPayedService(
